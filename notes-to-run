@@ -1,0 +1,26 @@
+Below are the steps to run and get the app running
+1. mvn clean install [under order-processor]
+2. dapr init [locally without k8]
+3. docker ps  [Check the placememt server and dapr scheduler to be  running]
+4.dapr run -f ../dapr.yaml
+5. dapr list and check if the app instance  loaded
+6.  now invoke the rest endpoint using the http -port display from dapr list command as below
+ dapr list
+    APP ID  HTTP PORT  GRPC PORT  APP PORT  COMMAND               AGE  CREATED              DAPRD PID  CLI PID  APP PID  RUN TEMPLATE PATH                                              APP LOG PATH                                                                                                        DAPRD LOG PATH                                                                                                        RUNTEMPLATENAME
+    order   50416      50417      8080      java -jar OrderPr...  10m  2025-07-02 13:23.20  54663      54660    54664    /Users/pratibhanayak/proj_github/workflows/sdk-test/dapr.yaml  /Users/pratibhanayak/proj_github/workflows/sdk-test/order-processor/target/.dapr/logs/order_app_20250702132320.log  /Users/pratibhanayak/proj_github/workflows/sdk-test/order-processor/target/.dapr/logs/order_daprd_20250702132320.log
+  pratibhanayak@P36F202Y3Y order-processor % curl -i http://localhost:50416/v1.0/invoke/order/method/orders/getOrder
+  HTTP/1.1 500 Internal Server Error
+  Content-Type: application/json
+  Traceparent: 00-673ee5a0cd6fdd1f31c9c982d4a58fdf-2c19c74e82362a55-01
+  Date: Wed, 02 Jul 2025 08:03:43 GMT
+  Content-Length: 108
+
+  {"errorCode":"ERR_DIRECT_INVOKE","message":"failed to invoke, id: order, err: couldn't find service: order"}%
+7. check if the app is available via direct invocation
+pratibhanayak@P36F202Y3Y order-processor % curl -i http://localhost:8080/orders/getOrder
+HTTP/1.1 200
+Content-Type: text/plain;charset=UTF-8
+Content-Length: 18
+Date: Wed, 02 Jul 2025 08:05:08 GMT
+
+GET was successful%

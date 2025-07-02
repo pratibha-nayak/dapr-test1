@@ -1,0 +1,11 @@
+version: 1
+common:
+  resourcesPath: ../../components
+apps:
+  - appID: order
+    appPort: 8080
+    daprHttpPort: 3500
+    appDirPath: ./order-processor/target
+#    command: ["java", "-jar", "OrderProcessingService-0.0.1-SNAPSHOT.jar", "io.dapr.quickstarts.workflows.WorkflowConsoleApp"]
+    command: ["java", "-jar", "OrderProcessingService-0.0.1-SNAPSHOT.jar"]
+
